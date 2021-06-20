@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/classmarksheet.css">
+    <link rel="stylesheet" href="css/common/table.css">
+    <title>Class Marksheet</title>
+</head>
+
+<body>
+    <div>
+        <div>
+            <h2 class="text-center">Class Marksheet</h2>
+            <div class="form-add" id="frmAddStudent">
+                <table>
+                    <tr>
+                        <td>Họ tên :</td>
+                        <td><input type="text" property="Name"></td>
+                    </tr>
+                    <tr>
+                        <td>Điểm toán:</td>
+                        <td><input class="point" type="number" min="0" max="10" property="MathScores"></td>
+                    </tr>
+                    <tr>
+                        <td>Điểm lý :</td>
+                        <td><input class="point" type="number" min="0" max="10" property="PhysicsPoints"></td>
+                    </tr>
+                    <tr>
+                        <td>Điểm hóa : </td>
+                        <td><input class="point" type="number" min="0" max="10" property="ChemistryScore"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="justify-center">
+                                <button id="addStudent" class="btn btn-default"> Nhập</button>
+                                <button id="saveStudent" class="btn" disabled>Sửa</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="content">
+            <table id="main-table" class="tb-classmarksheet">
+                <thead>
+                    <tr class="main-border">
+                        <th property="STT">STT</th>
+                        <th property="Name">Họ tên</th>
+                        <th property="MathScores">Điểm toán</th>
+                        <th property="PhysicsPoints">Điểm lý</th>
+                        <th property="ChemistryScore">Điểm hóa</th>
+                        <th property="Avg">Điểm trung bình</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr pro>
+                        <td></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>
+                            <div class="justìy-center">
+                                <button id="caculatorAvgPoint">
+                  Tính điểm trung bình
+                </button>
+                                <button id="studentGood">
+                  Xác định học sinh giỏi
+                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <script src="js/common/base.js"></script>
+    <script src="js/common/helper.js"></script>
+    <script src="js/classmarksheet.js"></script>
+</body>
+
+</html>
