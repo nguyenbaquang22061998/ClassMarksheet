@@ -12,6 +12,10 @@ h2 {
     text-align: center;
 }
 
+.title-sheet{
+    margin-top:50px;
+}
+
 .hide {
     display: none;
 }
@@ -32,8 +36,8 @@ h2 {
     margin-left: 20px;
 }
 
-.form-add table tr td .point {
-    width: 50px;
+.form-add table tr td .score {
+    width: 30px;
     padding: 5px 10px;
     margin-left: 20px;
 }
@@ -74,6 +78,7 @@ td {
 .btn {
     padding: 0px 15px;
     margin-right: 7px;
+    height: 30px;
 }
 
 .btn-warning {
@@ -108,4 +113,8 @@ td {
 
 .main-border {
     border-top: 1px solid
+}
+
+.hidden{
+    display: none;
 }

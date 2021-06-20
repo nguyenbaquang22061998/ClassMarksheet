@@ -1,51 +1,90 @@
-var listStudent = [];
+var lstItems = [];
 window.addEventListener('load', function() {
     let index = new Index();
 })
-class Index extends Base {
+
+class Fundamental {
     constructor() {
-        super();
-        this.InitEvent();
+        this.lstItems = [];
+        let strlstItems = localStorage.getItem('lstItems');
+        if (strlstItems != null && !strlstItems.IsEmptyOrSpaces()) {
+            this.lstItems = JSON.parse(strlstItems);
+        }
+        this.GetDataForCell();
     }
-    InitEvent() {
-        document.querySelector("#addStudent").addEventListener("click", this.SaveStudent.bind(this, { model: 1 }));
-        document.querySelector("#saveStudent").addEventListener("click", this.SaveStudent.bind(this, { model: 2 }));
-        document.querySelector("#studentGood").addEventListener("click", this.IsStudentGood.bind(this));
-        document.querySelector("#caculatorAvgPoint").addEventListener("click", this.CaculatorAvgPoint.bind(this));
+    GetDataForCell(student) {
+        let property = document.querySelectorAll('th[property]');
+        let tbody = document.querySelector("#main-table tbody");
+        tbody.innerHTML = "";
+        let strlstItems = JSON.stringify(this.lstItems);
+        localStorage.setItem('lstItems', strlstItems)
+        this.lstItems.forEach(function(item, index) {
+            let row = tbody.insertRow();
+            if (student && item["Avg"] > 7.5) {
+                row.setAttribute("class", "border-red")
+            }
+            property.forEach(function(element) {
+                let propertyName = element.getAttribute("property");
+                let newCell = row.insertCell();
+                let value = document.createTextNode(item[propertyName]);
+                if (propertyName == "STT") {
+                    let stt = index + 1;
+                    value = document.createTextNode(stt);
+                }
+                newCell.appendChild(value);
+            });
+            let cellNew = row.insertCell();
+            let buttonEdit = document.createElement("button");
+            buttonEdit.innerHTML = "Edit";
+            buttonEdit.setAttribute("class", "btnEdit btn btn-warning");
+            buttonEdit.setAttribute("selectedId", item["Id"]);
+            let buttonDelete = document.createElement("button");
+            buttonDelete.innerHTML = "Delete";
+            buttonDelete.setAttribute("selectedId", item["Id"]);
+            buttonDelete.setAttribute("class", "btnDelete btn btn-danger");
+            cellNew.appendChild(buttonEdit);
+            cellNew.appendChild(buttonDelete);
+        });
+    }
+}
+class Index extends Fundamental {
+    constructor() {
+        // gọi ra constructor của class cha (Fundamental)
+        super();
+        this.Init();
+    }
+    Init() {
+        document.querySelector("#add").addEventListener("click", this.Save.bind(this, { model: 1 }));
+        document.querySelector("#save").addEventListener("click", this.Save.bind(this, { model: 2 }));
+        document.querySelector("#check").addEventListener("click", this.Check.bind(this));
+        document.querySelector("#math").addEventListener("click", this.Math.bind(this));
     }
 
-    ReloadEvent() {
-        let listBtnEdit = document.getElementsByClassName("btnEdit");
-        Array.from(listBtnEdit).forEach(element => {
-            element.addEventListener("click", this.UpdateStudent.bind(this));
-        });
-        let listBtnDelete = document.getElementsByClassName("btnDelete");
-        Array.from(listBtnDelete).forEach(element => {
-            element.addEventListener("click", this.DeleteStudent.bind(this));
-        });
-    }
-    DeleteStudent(even) {
+    // Function delete student.
+    Delete(even) {
         let me = this;
         let id = even.currentTarget.getAttribute('selectedId');
-        me.listStudent = me.listStudent.filter(x => x["Id"] !== parseInt(id));
-        me.LoadData();
+        me.lstItems = me.lstItems.filter(x => x["Id"] !== parseInt(id));
+        me.GetDataForCell();
     }
-    UpdateStudent(even) {
+
+    // Function Update Student.
+    Update(even) {
         let me = this;
         let id = even.currentTarget.getAttribute('selectedId');
-        me.listStudent.forEach(item => {
+        me.lstItems.forEach(item => {
             if (item["Id"] == id) {
                 let property = document.querySelectorAll('input[property]');
                 property.forEach(element => {
                     let propertyName = element.getAttribute("property");
                     if (propertyName == "Name") {
                         element.value = item["Name"];
-                    } else if (propertyName == "MathScores") {
-                        element.value = item["MathScores"];
-                    } else if (propertyName == "PhysicsPoints") {
-                        element.value = item["PhysicsPoints"];
-                    } else if (propertyName == "ChemistryScore") {
-                        element.value = item["ChemistryScore"];
+                    } else if (propertyName == "Math") {
+                        element.value = item["Math"];
+                    } else if (propertyName == "Physics") {
+                        element.value = item["Physics"];
+                    } else if (propertyName == "Chemistry") {
+                        element.value = item["Chemistry"];
                     }
                 });
             }
@@ -54,28 +93,40 @@ class Index extends Base {
         listBtnDelete.forEach(item => {
             item.disabled = true;
         });
-        document.getElementById("addStudent").disabled = true;
-        document.getElementById("saveStudent").disabled = false;
-        document.getElementById("saveStudent").setAttribute("studentid", id);
-    }
-    IsStudentGood() {
-        let me = this;
-        if (me.listStudent.length == 0) {
-            alert("Không có sinh viên nào!");
-            return;
-        }
-        me.LoadData(true);
+        document.getElementById("add").disabled = true;
+        document.getElementById("save").hidden = false;
+        document.getElementById("save").setAttribute("studentid", id);
     }
 
-    LoadData(isStudentGood) {
-        super.LoadData(isStudentGood);
-        if (this.listStudent.length > 0) {
-            this.ReloadEvent();
+    // Function check student.
+    Check() {
+        let anyStudent = this;
+        if (anyStudent.lstItems.length == 0) {
+            alert("Không tồn tại học sinh nào!");
+            return;
+        }
+        anyStudent.GetDataForCell(true);
+    }
+    
+    // Extend fuction GetDataForCall
+    GetDataForCell(student) {
+        super.GetDataForCell(student);
+        if (this.lstItems.length > 0) {
+            let listBtnEdit = document.getElementsByClassName("btnEdit");
+            Array.from(listBtnEdit).forEach(element => {
+                element.addEventListener("click", this.Update.bind(this));
+            });
+            let listBtnDelete = document.getElementsByClassName("btnDelete");
+            Array.from(listBtnDelete).forEach(element => {
+                element.addEventListener("click", this.Delete.bind(this));
+            });
         }
     }
-    SaveStudent(event) {
+
+    // Function Save Student.
+    Save(event) {
         var mode = event.model;
-        let me = this;
+        let anyStudent = this;
         let property = document.querySelectorAll('input[property]');
         let name = "",
             mathScores, physicsPoints, chemistryScore, avg;
@@ -83,11 +134,11 @@ class Index extends Base {
             let propertyName = element.getAttribute("property");
             if (propertyName == "Name") {
                 name = element.value;
-            } else if (propertyName == "MathScores") {
+            } else if (propertyName == "Math") {
                 mathScores = element.value;
-            } else if (propertyName == "PhysicsPoints") {
+            } else if (propertyName == "Physics") {
                 physicsPoints = element.value;
-            } else if (propertyName == "ChemistryScore") {
+            } else if (propertyName == "Chemistry") {
                 chemistryScore = element.value;
             }
         });
@@ -112,38 +163,39 @@ class Index extends Base {
         }
 
         if (mode == 1) {
-            avg = me.AvgPoint(mathScores, physicsPoints, chemistryScore);
+            avg = anyStudent.AvgPoint(mathScores, physicsPoints, chemistryScore);
             let id = 1;
-            if (me.listStudent.length > 0) {
-                id = parseInt(me.listStudent[me.listStudent.length - 1].Id) + 1;
+            if (anyStudent.lstItems.length > 0) {
+                id = parseInt(anyStudent.lstItems[anyStudent.lstItems.length - 1].Id) + 1;
             }
-            me.listStudent = me.listStudent.AddStudent(id, name, mathScores, physicsPoints, chemistryScore, "?");
+            anyStudent.lstItems = anyStudent.lstItems.AddStudent(id, name, mathScores, physicsPoints, chemistryScore, "?");
         } else {
-            let id = document.getElementById("saveStudent").getAttribute("studentid");
-            me.listStudent.forEach(item => {
+            let id = document.getElementById("save").getAttribute("studentid");
+            anyStudent.lstItems.forEach(item => {
                 if (item["Id"] == id) {
                     item["Name"] = name;
-                    item["MathScores"] = mathScores;
-                    item["PhysicsPoints"] = physicsPoints;
-                    item["ChemistryScore"] = chemistryScore;
+                    item["Math"] = mathScores;
+                    item["Physics"] = physicsPoints;
+                    item["Chemistry"] = chemistryScore;
                 }
                 item["Avg"] = "?";
             });
-            document.getElementById("addStudent").disabled = false;
-            document.getElementById("saveStudent").disabled = true;
+            document.getElementById("add").disabled = false;
+            document.getElementById("save").hidden = true;
         }
-        me.LoadData();
-        me.ResetForm();
+        anyStudent.GetDataForCell();
+        anyStudent.ResetForm();
     }
 
-    CaculatorAvgPoint() {
-        let me = this;
-        if (me.listStudent.length == 0) {
+    // Function Calculator Averge Score.
+    Math() {
+        let anyStudent = this;
+        if (anyStudent.lstItems.length == 0) {
             alert("Không có sinh viên nào!");
             return;
         }
-        me.listStudent.AvgPointArray(me);
-        me.LoadData();
+        anyStudent.lstItems.AvgPointArray(anyStudent);
+        anyStudent.GetDataForCell();
     }
 
     ResetForm() {
@@ -152,7 +204,6 @@ class Index extends Base {
             element.value = "";
         });
     }
-
 
     AvgPoint(mathScores, physicsPoints, chemistryScore) {
         let avg = (parseFloat(mathScores) + parseFloat(physicsPoints) + parseFloat(chemistryScore)) / 3;

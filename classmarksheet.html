@@ -12,7 +12,7 @@
 <body>
     <div>
         <div>
-            <h2 class="text-center">Class Marksheet</h2>
+            <h2 class="text-center title-sheet">Class Marksheet</h2>
             <div class="form-add" id="frmAddStudent">
                 <table>
                     <tr>
@@ -21,21 +21,21 @@
                     </tr>
                     <tr>
                         <td>Điểm toán:</td>
-                        <td><input class="point" type="number" min="0" max="10" property="MathScores"></td>
+                        <td><input class="score"  property="Math"></td>
                     </tr>
                     <tr>
                         <td>Điểm lý :</td>
-                        <td><input class="point" type="number" min="0" max="10" property="PhysicsPoints"></td>
+                        <td><input class="score" property="Physics"></td>
                     </tr>
                     <tr>
                         <td>Điểm hóa : </td>
-                        <td><input class="point" type="number" min="0" max="10" property="ChemistryScore"></td>
+                        <td><input class="score" property="Chemistry"></td>
                     </tr>
                     <tr>
                         <td colspan="2">
                             <div class="justify-center">
-                                <button id="addStudent" class="btn btn-default"> Nhập</button>
-                                <button id="saveStudent" class="btn" disabled>Sửa</button>
+                                <button id="add" class="btn"> Nhập</button>
+                                <button id="save" class="btn" hidden>Sửa</button>
                             </div>
                         </td>
                     </tr>
@@ -49,10 +49,10 @@
                     <tr class="main-border">
                         <th property="STT">STT</th>
                         <th property="Name">Họ tên</th>
-                        <th property="MathScores">Điểm toán</th>
-                        <th property="PhysicsPoints">Điểm lý</th>
-                        <th property="ChemistryScore">Điểm hóa</th>
-                        <th property="Avg">Điểm trung bình</th>
+                        <th property="Math">Toán</th>
+                        <th property="Physics">Lý</th>
+                        <th property="Chemistry">Hóa</th>
+                        <th property="Avg">Trung bình</th>
                         <th>Thao tác</th>
                     </tr>
                 </thead>
@@ -65,10 +65,10 @@
                     <tr>
                         <td>
                             <div class="justìy-center">
-                                <button id="caculatorAvgPoint">
+                                <button id="math">
                   Tính điểm trung bình
                 </button>
-                                <button id="studentGood">
+                                <button id="check">
                   Xác định học sinh giỏi
                 </button>
                             </div>
@@ -78,9 +78,8 @@
             </table>
         </div>
     </div>
-    <script src="js/common/base.js"></script>
-    <script src="js/common/helper.js"></script>
-    <script src="js/classmarksheet.js"></script>
+    <!-- js -->
+<script src="js/common/common.js"></script>
+<script src="js/classmarksheet.js"></script>
 </body>
-
 </html>
