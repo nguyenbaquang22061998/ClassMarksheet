@@ -35,11 +35,11 @@ class Fundamental {
             });
             let cellNew = row.insertCell();
             let buttonEdit = document.createElement("button");
-            buttonEdit.innerHTML = "Edit";
+            buttonEdit.innerHTML = "Sửa";
             buttonEdit.setAttribute("class", "btnEdit btn btn-warning");
             buttonEdit.setAttribute("selectedId", item["Id"]);
             let buttonDelete = document.createElement("button");
-            buttonDelete.innerHTML = "Delete";
+            buttonDelete.innerHTML = "Xóa";
             buttonDelete.setAttribute("selectedId", item["Id"]);
             buttonDelete.setAttribute("class", "btnDelete btn btn-danger");
             cellNew.appendChild(buttonEdit);
@@ -107,7 +107,7 @@ class Index extends Fundamental {
         }
         anyStudent.GetDataForCell(true);
     }
-    
+
     // Extend fuction GetDataForCall
     GetDataForCell(student) {
         super.GetDataForCell(student);

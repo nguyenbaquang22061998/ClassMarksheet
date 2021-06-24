@@ -4,15 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/classmarksheet.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/common/table.css">
-    <title>Class Marksheet</title>
+    <link rel="stylesheet" href="css/classmarksheet.css">
+    <title>BẢNG ĐIỂM</title>
 </head>
 
 <body>
-    <div>
+    <div class="container form-border mg-top-40">
         <div>
-            <h2 class="text-center title-sheet">Class Marksheet</h2>
+            <h2 class="text-center title-sheet">BẢNG ĐIỂM</h2>
             <div class="form-add" id="frmAddStudent">
                 <table>
                     <tr>
@@ -21,7 +22,7 @@
                     </tr>
                     <tr>
                         <td>Điểm toán:</td>
-                        <td><input class="score"  property="Math"></td>
+                        <td><input class="score" property="Math"></td>
                     </tr>
                     <tr>
                         <td>Điểm lý :</td>
@@ -33,9 +34,9 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <div class="justify-center">
-                                <button id="add" class="btn"> Nhập</button>
-                                <button id="save" class="btn" hidden>Sửa</button>
+                            <div>
+                                <button id="add" class="btn btn-primary"> Nhập</button>
+                                <button id="save" class="btn btn-warning" hidden>Sửa</button>
                             </div>
                         </td>
                     </tr>
@@ -43,43 +44,41 @@
             </div>
 
         </div>
-        <div class="content">
-            <table id="main-table" class="tb-classmarksheet">
-                <thead>
-                    <tr class="main-border">
-                        <th property="STT">STT</th>
-                        <th property="Name">Họ tên</th>
-                        <th property="Math">Toán</th>
-                        <th property="Physics">Lý</th>
-                        <th property="Chemistry">Hóa</th>
-                        <th property="Avg">Trung bình</th>
-                        <th>Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr pro>
-                        <td></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td>
-                            <div class="justìy-center">
-                                <button id="math">
-                  Tính điểm trung bình
-                </button>
-                                <button id="check">
-                  Xác định học sinh giỏi
-                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+        <div class="container content">
+            <div class="row">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Bảng điểm học sinh</h3>
+                    </div>
+                    <table id="main-table" class="table">
+                        <thead>
+                            <tr class="main-border">
+                                <th property="STT">STT</th>
+                                <th property="Name">Họ tên</th>
+                                <th property="Math">Toán</th>
+                                <th property="Physics">Lý</th>
+                                <th property="Chemistry">Hóa</th>
+                                <th property="Avg">Trung bình</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr pro>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-center">
+                    <button class="btn btn-success" id="math">Tính điểm trung bình</button>
+                    <button class="btn btn-success" id="check">Xác định học sinh giỏi</button>
+                </div>
+            </div>
         </div>
     </div>
     <!-- js -->
-<script src="js/common/common.js"></script>
-<script src="js/classmarksheet.js"></script>
+    <script src="js/common/common.js"></script>
+    <script src="js/classmarksheet.js"></script>
 </body>
+
 </html>
